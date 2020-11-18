@@ -1,0 +1,10 @@
+.contact-list-item{
+    display: flex;
+    padding: 5px;
+}
+.contact-list-item-btn{
+    display: block;
+}
+.contact-list-item-btn-text{
+    margin: 0;
+}
