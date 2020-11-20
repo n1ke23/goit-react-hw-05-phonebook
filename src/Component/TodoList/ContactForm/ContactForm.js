@@ -3,10 +3,13 @@ import { v4 as uuidv4 } from 'uuid';
 import PropTypes from "prop-types";
 import './ContactForm.css'
 
-const ContactForm = ({ addContact }) => {
+const ContactForm = ({ addContact, isNotifi, setIsNotifi }) => {
 
     const [objForm, setObjForm] = useState({ name: '', number: '' });
     const inputHandler = ({ target }) => {
+        // if (isNotifi) {
+        //     setIsNotifi(false)
+        // };
         const { value, name } = target;
         setObjForm(prev => ({ ...prev, [name]: value }));
     };

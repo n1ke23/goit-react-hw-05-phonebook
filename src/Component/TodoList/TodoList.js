@@ -18,7 +18,7 @@ const state = {
 
 const TodoList = () => {
 	const [obj, setObj] = useState({ ...state })
-	const [isNotifiy, setIsNotifiy] = useState(false)
+	const [isNotifi, setIsNotifi] = useState(false)
 
 	useEffect(() => {
 		const prevContact = localStorage.getItem("contacts")
@@ -45,14 +45,18 @@ const TodoList = () => {
 	const vissbleTask = () => {
 		return obj.contacts.filter((el) => el.name.toLowerCase().includes(obj.filter.toLowerCase()))
 	}
-
+	const reversNotifi = () => {
+		setIsNotifi(true)
+		setTimeout(function () {
+			setIsNotifi(false);
+		}, 2000);
+	}
 	const filterTask = vissbleTask()
 	const addContact = async (user) => {
 		if (obj.contacts.some((el) => el.name === user.name)) {
-			setIsNotifiy(true)
+			reversNotifi()
 			// alert(`${user.name} уже записанно, введите другое имя!`)
 		} else {
-			setIsNotifiy(false)
 			setObj((prev) => ({ ...prev, contacts: [...prev.contacts, { id: uuidv4(), ...user }] }))
 			localStorage.setItem("contacts", JSON.stringify(obj.contacts))
 		}
@@ -64,10 +68,10 @@ const TodoList = () => {
 			<CSSTransition in={true} appear={true} timeout={500} classNames="title" unmountOnExit>
 				<h1 className='titles'>Phonebook</h1>
 			</CSSTransition>
-			<CSSTransition in={isNotifiy} timeout={500} classNames="alert" unmountOnExit>
+			<CSSTransition in={isNotifi} timeout={500} classNames="alert" unmountOnExit>
 				<h2 className='alert'>Contact is already exists!</h2>
 			</CSSTransition>
-			<ContactForm addContact={addContact} />
+			<ContactForm addContact={addContact} setIsNotifi={setIsNotifi} isNotifi={isNotifi} />
 
 			<CSSTransition in={obj.contacts.length > 1} timeout={250} classNames='filter' unmountOnExit>
 				<Filter inputHandlerFilter={inputFilter} filter={obj.filter} />
