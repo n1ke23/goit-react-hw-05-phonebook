@@ -1,8 +1,13 @@
 .contact-form-btn{
     display: block;
     margin-top: 10px;
+    background-color: blue;
+    color: cornsilk;
+    padding: 10px;
 }
 .form{
     border: 1px solid black;
     border-radius: 5px;
+    width: fit-content;
+    padding: 10px;
 }

@@ -1,0 +1,25 @@
+
+.items-enter {
+    opacity: 0;
+    transform: translateX(-100%);
+}
+
+.items-enter-active {
+    opacity: 1;
+	transform: translateX(0);
+	transition: all 250ms linear;
+}
+
+.items-exit {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.items-exit-active {
+    opacity: 0;
+	transform: translateX(-100%);
+	transition: all 250ms linear;
+}
+.list-item{
+    padding: 0;
+}

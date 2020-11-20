@@ -1,42 +1,30 @@
 import React, { useState, useEffect } from "react"
+import { CSSTransition, TransitionGroup } from "react-transition-group"
 import { v4 as uuidv4 } from "uuid"
 import ContactForm from "./ContactForm/ContactForm"
 import Filter from "./Filter/Filter"
 import ContactList from "./ContactList/ContactList"
-import title from "./titleTransition.module.css"
-import { Transition } from "react-transition-group"
+import "./TodoList.css"
 
 const state = {
 	contacts: [
-		{ id: "id-1", name: "Rosie Simpson", number: "459-12-56" },
-		{ id: "id-2", name: "Hermione Kline", number: "443-89-12" },
-		{ id: "id-3", name: "Eden Clements", number: "645-17-79" },
-		{ id: "id-4", name: "Annie Copeland", number: "227-91-26" },
+		// { id: "id-1", name: "Rosie Simpson", number: "459-12-56" },
+		// { id: "id-2", name: "Hermione Kline", number: "443-89-12" },
+		// { id: "id-3", name: "Eden Clements", number: "645-17-79" },
+		// { id: "id-4", name: "Annie Copeland", number: "227-91-26" },
 	],
 	filter: "",
 }
 
 const TodoList = () => {
 	const [obj, setObj] = useState({ ...state })
-	// useEffect(()=>{
-	//   const prevContact = localStorage.getItem('contacts');
-	//   const res=JSON.parse(prevContact)
-	//   console.log(res);
-	//   setObj(prev => ({ ...prev, contacts: [JSON.parse(prevContact)] }))
-	// })
-	// useEffect(() => {
-	//   const prevContact = localStorage.getItem('contacts')
-	//   const parsContacts = JSON.parse(prevContact)
-	//   if (prevContact) {
-	//     setObj(prev => ({ ...prev, contacts: [...parsContacts] }))
-	//   }
-	// }, []);
+	const [isNotifiy, setIsNotifiy] = useState(false)
 
 	useEffect(() => {
 		const prevContact = localStorage.getItem("contacts")
 		const res = JSON.parse(prevContact)
-		console.log(res)
 		setObj((prev) => ({ ...prev, contacts: res }))
+
 	}, [])
 
 	useEffect(() => {
@@ -45,8 +33,10 @@ const TodoList = () => {
 
 	const inputFilter = ({ target }) => {
 		const { value, name } = target
+
 		setObj((prev) => ({ ...prev, [name]: value }))
 	}
+
 	const delContact = (id) => {
 		const contacts = obj.contacts.filter((el) => el.id !== id)
 		setObj((prev) => ({ ...prev, contacts }))
@@ -59,9 +49,10 @@ const TodoList = () => {
 	const filterTask = vissbleTask()
 	const addContact = async (user) => {
 		if (obj.contacts.some((el) => el.name === user.name)) {
-			alert(`${user.name} уже записанно, введите другое имя!`)
+			setIsNotifiy(true)
+			// alert(`${user.name} уже записанно, введите другое имя!`)
 		} else {
-			console.log(obj.contacts)
+			setIsNotifiy(false)
 			setObj((prev) => ({ ...prev, contacts: [...prev.contacts, { id: uuidv4(), ...user }] }))
 			localStorage.setItem("contacts", JSON.stringify(obj.contacts))
 		}
@@ -70,14 +61,20 @@ const TodoList = () => {
 	return (
 		<>
 			<div>
-				<Transition appear timeout={500} classNames={title}>
-					<h1>Phonebook</h1>
-				</Transition>
+				<CSSTransition in={true} appear={true} timeout={500} classNames="title" unmountOnExit>
+					<h1 className='titles'>Phonebook</h1>
+				</CSSTransition>
+				<CSSTransition in={isNotifiy} timeout={500} classNames="alert" unmountOnExit>
+					<h2 className='alert'>Contact is already exists!</h2>
+				</CSSTransition>
 				<ContactForm addContact={addContact} />
 
-				<h2>Contacts</h2>
-				<Filter inputHandlerFilter={inputFilter} filter={obj.filter} />
+				<CSSTransition in={obj.contacts.length > 1} timeout={250} classNames='filter' unmountOnExit>
+					<Filter inputHandlerFilter={inputFilter} filter={obj.filter} />
+				</CSSTransition>
+
 				<ContactList obj={obj} filter={filterTask} deleteContact={delContact} />
+
 			</div>
 		</>
 	)

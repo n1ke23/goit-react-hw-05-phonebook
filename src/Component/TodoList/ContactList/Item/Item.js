@@ -5,7 +5,7 @@ import './Item.css'
 const Item = ({ id, name, number, deleteContact }) => {
     return (
         <li className="contact-list-item">
-            <p>
+            <p className="contact-list-item-text">
                 {name}: {number}
             </p>
             <button
