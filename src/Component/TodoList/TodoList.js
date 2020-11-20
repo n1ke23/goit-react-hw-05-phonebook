@@ -60,22 +60,22 @@ const TodoList = () => {
 
 	return (
 		<>
-			<div>
-				<CSSTransition in={true} appear={true} timeout={500} classNames="title" unmountOnExit>
-					<h1 className='titles'>Phonebook</h1>
-				</CSSTransition>
-				<CSSTransition in={isNotifiy} timeout={500} classNames="alert" unmountOnExit>
-					<h2 className='alert'>Contact is already exists!</h2>
-				</CSSTransition>
-				<ContactForm addContact={addContact} />
 
-				<CSSTransition in={obj.contacts.length > 1} timeout={250} classNames='filter' unmountOnExit>
-					<Filter inputHandlerFilter={inputFilter} filter={obj.filter} />
-				</CSSTransition>
+			<CSSTransition in={true} appear={true} timeout={500} classNames="title" unmountOnExit>
+				<h1 className='titles'>Phonebook</h1>
+			</CSSTransition>
+			<CSSTransition in={isNotifiy} timeout={500} classNames="alert" unmountOnExit>
+				<h2 className='alert'>Contact is already exists!</h2>
+			</CSSTransition>
+			<ContactForm addContact={addContact} />
 
-				<ContactList obj={obj} filter={filterTask} deleteContact={delContact} />
+			<CSSTransition in={obj.contacts.length > 1} timeout={250} classNames='filter' unmountOnExit>
+				<Filter inputHandlerFilter={inputFilter} filter={obj.filter} />
+			</CSSTransition>
 
-			</div>
+			<ContactList obj={obj} filter={filterTask} deleteContact={delContact} />
+
+
 		</>
 	)
 }
