@@ -48,7 +48,9 @@ const TodoList = () => {
 	const reversNotifi = () => {
 		setIsNotifi(true)
 		setTimeout(function () {
-			setIsNotifi(false);
+			if (isNotifi) {
+				setIsNotifi(false)
+			};
 		}, 2000);
 	}
 	const filterTask = vissbleTask()
