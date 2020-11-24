@@ -39,7 +39,7 @@ const TodoList = () => {
 
 	const delContact = (id) => {
 		const contacts = obj.contacts.filter((el) => el.id !== id)
-		setObj((prev) => ({ ...prev, contacts }))
+		setObj((prev) => ({ ...prev, contacts, filter: "" }))
 	}
 
 	const vissbleTask = () => {
